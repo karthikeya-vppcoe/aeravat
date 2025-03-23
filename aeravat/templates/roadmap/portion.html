@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card my-4">
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+          <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+            <h6 class="text-white text-capitalize ps-3">Study Roadmap Generator</h6>
+          </div>
+        </div>
+        <div class="card-body px-0 pb-2">
+          <div class="container">
+            <div class="upload-section text-center mb-4">
+              <input type="file" id="imageInput" class="d-none">
+              <label for="imageInput" class="btn btn-outline-primary me-2">Choose File</label>
+              <button onclick="uploadImage()" class="btn bg-gradient-primary">Upload and Generate Roadmap</button>
+            </div>
+            <div class="timeline-container">
+              <ul class="timeline" id="roadmap"></ul>
+              <div class="image-preview" id="imagePreview"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style>
+.timeline-container {
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
+}
+
+
+.timeline {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  position: relative;
+}
+
+
+.timeline li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+
+.bullet {
+  background: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(233, 30, 99, 0.4);
+}
+
+
+.content {
+  margin-left: 20px;
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  flex: 1;
+}
+
+
+.curve {
+  position: absolute;
+  top: 30px;
+  left: 15px;
+  border-left: 2px dashed #e91e63;
+  height: calc(100% - 30px);
+}
+
+
+.image-preview {
+  margin-left: 20px;
+  flex: 0 0 500px;
+  max-width: 100%;
+}
+
+
+.image-preview img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+
+.timeline li:last-child .curve {
+  display: none;
+}
+
+
+.content p {
+  margin-bottom: 8px;
+  color: #344767;
+}
+
+
+.content p:last-child {
+  margin-bottom: 0;
+}
+
+
+@media (max-width: 768px) {
+  .timeline-container {
+    flex-direction: column;
+  }
+ 
+  .image-preview {
+    margin-left: 0;
+    margin-top: 20px;
+    flex: none;
+  }
+}
+</style>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  fetch('/portion/', {
+    method: 'POST',
+  })
+  .then(response => response.json())
+  .then(data => {
+    const roadmap = document.getElementById('roadmap');
+    roadmap.innerHTML = generateRoadmapHTML(data.text);
+  })
+  .catch(error => console.error('Error:', error));
+});
+
+
+function uploadImage() {
+  const imageInput = document.getElementById('imageInput');
+  const file = imageInput.files[0];
+ 
+  if (!file) {
+    alert('Please select an image.');
+    return;
+  }
+
+
+  const formData = new FormData();
+  formData.append('image', file);
+
+
+  fetch('/portion/', {
+    method: 'POST',
+    body: formData,
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      alert(data.error);
+    } else {
+      const roadmap = document.getElementById('roadmap');
+      const imagePreview = document.getElementById('imagePreview');
+      roadmap.innerHTML = generateRoadmapHTML(data.text);
+      imagePreview.innerHTML = `<img src="${URL.createObjectURL(file)}" alt="Uploaded Image">`;
+    }
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+
+function generateRoadmapHTML(data) {
+  data = data.replace(/\*\*/g, '').replace(/\*/g, '&#8226;');
+  const sections = data.split(/\n{2,}/);
+  let html = '';
+ 
+  sections.forEach((section, index) => {
+    const items = section.split(/\n/);
+    html += '<li>';
+    html += `<div class="bullet">${index + 1}</div>`;
+    html += '<div class="curve"></div>';
+    html += '<div class="content">';
+    items.forEach(item => {
+      if (item.trim()) {
+        html += `<p>${item.trim()}</p>`;
+      }
+    });
+    html += '</div>';
+    html += '</li>';
+  });
+
+
+  return html;
+}
+</script>
+{% endblock %}
+
+
+

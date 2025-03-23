@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlacementPrep.AI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;600&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            color: white;
+        }
+
+        /* Background with Subtle Animated Particles */
+        .landing-page {
+            background: url("https://media.giphy.com/media/3o7aCTfyhYawdOXcFW/giphy.gif") center/cover no-repeat;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Particle Effect */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url("https://i.imgur.com/Y4RZ5Qc.png"); /* Light Dots */
+            opacity: 0.2;
+            animation: moveParticles 15s linear infinite;
+        }
+
+        @keyframes moveParticles {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-50px); }
+        }
+
+        /* Background Overlay */
+        .landing-page::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+        }
+
+        /* Floating Card Effect */
+        /* Floating Card - Removed blur */
+.overlay {
+    position: relative;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent without blur */
+    padding: 40px 50px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+    animation: fadeIn 1.5s ease-in-out, floating 5s ease-in-out infinite;
+}
+
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Heading with Glitch Effect */
+        .overlay h1 {
+            font-size: 3.8rem;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #0ff, #f0f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+            animation: glitch 1.5s infinite alternate;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 3px 3px 5px #0ff, -3px -3px 5px #f0f; }
+            100% { text-shadow: -3px -3px 5px #0ff, 3px 3px 5px #f0f; }
+        }
+
+        /* Subtitle */
+        .overlay p {
+            font-size: 1.4rem;
+            font-weight: 300;
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+
+        /* Glowing Button */
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(90deg, #6546d2, #b857f5);
+            border-radius: 50px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 10px rgba(101, 70, 210, 0.8);
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            background: linear-gradient(90deg, #b857f5, #6546d2);
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="landing-page">
+        <div class="particles"></div> <!-- Animated Particles -->
+        <div class="overlay">
+            <h1>PlacementPrep.AI</h1>
+            <p>Roadmaps, Placements & Mentoring</p>
+            <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn">Get Started</a>
+        </div>
+    </div>
+
+</body>
+</html>

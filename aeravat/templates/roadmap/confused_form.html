@@ -1,0 +1,298 @@
+{% extends "base3.html" %}
+
+{% block title %}Confused Form{% endblock %}
+
+{% block content %}
+<div class="container mt-0" style="display: flex; width: 100%; padding-right: 5rem; padding-left: 5rem; padding-top:2rem; padding-bottom: 2rem; justify-content: center; flex-direction: column; ">
+    <h1 class="text-center mb-4">Career Path Questionnaire</h1>
+    <form action="/handle_confused_form" method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="mb-3">Financial Background</h2>
+                <div class="form-group">
+                    <label for="financial_support" class="form-label">Do your parents/family support your higher education financially?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="financial_support_yes" name="financial_support" value="Yes" checked required>
+                        <label class="form-check-label" for="financial_support_yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="financial_support_no" name="financial_support" value="No" required>
+                        <label class="form-check-label" for="financial_support_no">No</label>
+                    </div>
+                    <div class="invalid-feedback">Please choose an option.</div>
+                </div>
+                <div class="form-group" id="financial_budget_group" style="display: block;">
+                    <label for="financial_budget" class="form-label">If yes, what is the approximate annual budget for your education and living expenses?</label>
+                    <select class="form-control" id="financial_budget" name="financial_budget" required>
+                        <option value="">Choose an option...</option>
+                        <option value="No Limit">No Limit</option>
+                        <option value="1-5 lakhs">₹1-5 lakhs</option>
+                        <option value="5-10 lakhs">₹5-10 lakhs</option>
+                        <option value="10-20 lakhs">₹10-20 lakhs</option>
+                        <option value=">20 lakhs">>₹20 lakhs</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a budget.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="mb-3">Location</h2>
+                <div class="form-group">
+                    <label for="location" class="form-label">Do you live in a rural or urban area?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="location_rural" name="location" value="Rural" checked required>
+                        <label class="form-check-label" for="location_rural">Rural</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="location_urban" name="location" value="Urban" required>
+                        <label class="form-check-label" for="location_urban">Urban</label>
+                    </div>
+                    <div class="invalid-feedback">Please choose an option.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="mb-3">Interests and Skills</h2>
+                <div class="form-group">
+                    <label for="coding_interest" class="form-label">Are you more interested in coding or non-coding engineering fields?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="coding_interest_coding" name="coding_interest" value="Coding" checked required>
+                        <label class="form-check-label" for="coding_interest_coding">Coding</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="coding_interest_noncoding" name="coding_interest" value="Non-coding" required>
+                        <label class="form-check-label" for="coding_interest_noncoding">Non-coding</label>
+                    </div>
+                    <div class="invalid-feedback">Please choose an option.</div>
+                </div>
+                <div class="form-group">
+                    <label for="engineering_subjects" class="form-label">Which engineering subjects are you most passionate about? (Select up to 3)</label>
+                    <select class="form-control" id="engineering_subjects" name="engineering_subjects[]" multiple required>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Mechanical">Mechanical</option>
+                        <option value="Civil">Civil</option>
+                        <option value="Electrical">Electrical</option>
+                        <option value="Chemical">Chemical</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <div class="invalid-feedback">Please select at least one subject.</div>
+                </div>
+                <div class="form-group">
+                    <label for="strengths" class="form-label">What are your core strengths and abilities?</label>
+                    <textarea class="form-control" id="strengths" name="strengths" rows="3" required></textarea>
+                    <div class="invalid-feedback">Please enter your strengths.</div>
+                </div>
+                <div class="form-group">
+                    <label for="work_preference" class="form-label">Do you prefer working independently or in teams?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="work_preference_independent" name="work_preference" value="Independent" checked required>
+                        <label class="form-check-label" for="work_preference_independent">Independent</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="work_preference_team" name="work_preference" value="Team" required>
+                        <label class="form-check-label" for="work_preference_team">Team</label>
+                    </div>
+                    <div class="invalid-feedback">Please choose an option.</div>
+                </div>
+                <div class="form-group">
+                    <label for="leadership" class="form-label">Do you enjoy taking on leadership roles?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="leadership_yes" name="leadership" value="Yes" checked required>
+                        <label class="form-check-label" for="leadership_yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="leadership_no" name="leadership" value="No" required>
+                        <label class="form-check-label" for="leadership_no">No</label>
+                    </div>
+                    <div class="invalid-feedback">Please choose an option.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="mb-3">Career Aspirations</h2>
+                <div class="form-group">
+                    <label for="long_term_goals" class="form-label">What are your long-term career goals?</label>
+                    <textarea class="form-control" id="long_term_goals" name="long_term_goals" rows="3" required></textarea>
+                    <div class="invalid-feedback">Please enter your long-term goals.</div>
+                </div>
+                <div class="form-group">
+                    <label for="sector_preference" class="form-label">Are you interested in working in the public sector or private sector?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="sector_preference_public" name="sector_preference" value="Public" checked required>
+                        <label class="form-check-label" for="sector_preference_public">Public</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="sector_preference_private" name="sector_preference" value="Private" required>
+                        <label class="form-check-label" for="sector_preference_private">Private</label>
+                    </div>
+                    <div class="invalid-feedback">Please choose an option.</div>
+                </div>
+                <div class="form-group">
+                    <label for="salary_expectations" class="form-label">What are your salary expectations after completing your engineering degree?</label>
+                    <select class="form-control" id="salary_expectations" name="salary_expectations" required>
+                        <option value="">Choose an option...</option>
+                        <option value="3-5 lakhs">₹3-5 lakhs</option>
+                        <option value="5-10 lakhs">₹5-10 lakhs</option>
+                        <option value="10-20 lakhs">₹10-20 lakhs</option>
+                        <option value=">20 lakhs">>₹20 lakhs</option>
+                    </select>
+                    <div class="invalid-feedback">Please select your salary expectations.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="mb-3">Academic Performance</h2>
+                <div class="form-group">
+                    <label for="cgpa" class="form-label">What is your current CGPA/percentage in engineering?</label>
+                    <input type="text" class="form-control" id="cgpa" name="cgpa" placeholder="Enter your CGPA/percentage" required>
+                    <div class="invalid-feedback">Please enter your CGPA/percentage.</div>
+                </div>
+                <div class="form-group">
+                    <label for="exam_comfort" class="form-label">How comfortable are you with competitive exams?</label>
+                    <select class="form-control" id="exam_comfort" name="exam_comfort" required>
+                        <option value="">Choose an option...</option>
+                        <option value="Highly comfortable">Highly comfortable</option>
+                        <option value="Comfortable">Comfortable</option>
+                        <option value="Slightly uncomfortable">Slightly uncomfortable</option>
+                        <option value="Not comfortable">Not comfortable</option>
+                    </select>
+                    <div class="invalid-feedback">Please choose a comfort level.</div>
+                </div>
+                <div class="form-group">
+                    <label for="exam_dedication" class="form-label">Are you willing to dedicate significant time and effort for preparation for competitive exams?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="exam_dedication_yes" name="exam_dedication" value="Yes" checked required>
+                        <label class="form-check-label" for="exam_dedication_yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="exam_dedication_no" name="exam_dedication" value="No" required>
+                        <label class="form-check-label" for="exam_dedication_no">No</label>
+                    </div>
+                    <div class="invalid-feedback">Please choose an option.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="mb-3">Personality and Preferences</h2>
+                <div class="form-group">
+                    <label for="risk_preference" class="form-label">Are you a risk-taker or prefer a secure path?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="risk_preference_risktaker" name="risk_preference" value="Risk-taker" checked required>
+                        <label class="form-check-label" for="risk_preference_risktaker">Risk-taker</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="risk_preference_secure" name="risk_preference" value="Secure" required>
+                        <label class="form-check-label" for="risk_preference_secure">Secure</label>
+                    </div>
+                    <div class="invalid-feedback">Please choose an option.</div>
+                </div>
+                <div class="form-group">
+                    <label for="work_life_balance" class="form-label">How important is work-life balance to you?</label>
+                    <select class="form-control" id="work_life_balance" name="work_life_balance" required>
+                        <option value="">Choose an option...</option>
+                        <option value="Very important">Very important</option>
+                        <option value="Important">Important</option>
+                        <option value="Slightly important">Slightly important</option>
+                        <option value="Not important">Not important</option>
+                    </select>
+                    <div class="invalid-feedback">Please choose an option.</div>
+                </div>
+                <div class="form-group">
+                    <label for="environment_preference" class="form-label">Do you prefer a fast-paced environment or a more relaxed setting?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="environment_preference_fastpaced" name="environment_preference" value="Fast-paced" checked required>
+                        <label class="form-check-label" for="environment_preference_fastpaced">Fast-paced</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="environment_preference_relaxed" name="environment_preference" value="Relaxed" required>
+                        <label class="form-check-label" for="environment_preference_relaxed">Relaxed</label>
+                    </div>
+                    <div class="invalid-feedback">Please choose an option.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="mb-3">Exposure to Different Fields</h2>
+                <div class="form-group">
+                    <label for="internship_experience" class="form-label">Have you had any internships or part-time jobs related to your field?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="internship_experience_yes" name="internship_experience" value="Yes" checked required>
+                        <label class="form-check-label" for="internship_experience_yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="internship_experience_no" name="internship_experience" value="No" required>
+                        <label class="form-check-label" for="internship_experience_no">No</label>
+                    </div>
+                    <div class="invalid-feedback">Please choose an option.</div>
+                </div>
+                <div class="form-group">
+                    <label for="extracurricular_activities" class="form-label">Have you participated in any extracurricular activities like clubs, workshops, or competitions?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="extracurricular_activities_yes" name="extracurricular_activities" value="Yes" checked required>
+                        <label class="form-check-label" for="extracurricular_activities_yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="extracurricular_activities_no" name="extracurricular_activities" value="No" required>
+                        <label class="form-check-label" for="extracurricular_activities_no">No</label>
+                    </div>
+                    <div class="invalid-feedback">Please choose an option.</div>
+                </div>
+                <div class="form-group">
+                    <label for="mentors" class="form-label">Do you have any mentors or role models in your chosen field?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="mentors_yes" name="mentors" value="Yes" checked required>
+                        <label class="form-check-label" for="mentors_yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="mentors_no" name="mentors" value="No" required>
+                        <label class="form-check-label" for="mentors_no">No</label>
+                    </div>
+                    <div class="invalid-feedback">Please choose an option.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="mb-3">Additional Information</h2>
+                <div class="form-group">
+                    <label for="open_to_other_fields" class="form-label">Are you open to exploring career options outside of engineering?</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="open_to_other_fields_yes" name="open_to_other_fields" value="Yes" checked required>
+                        <label class="form-check-label" for="open_to_other_fields_yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" id="open_to_other_fields_no" name="open_to_other_fields" value="No" required>
+                        <label class="form-check-label" for="open_to_other_fields_no">No</label>
+                    </div>
+                    <div class="invalid-feedback">Please choose an option.</div>
+                </div>
+                <div class="form-group">
+                    <label for="additional_info" class="form-label">Any other information that you think is relevant for this decision?</label>
+                    <textarea class="form-control" id="additional_info" name="additional_info" rows="3" required></textarea>
+                    <div class="invalid-feedback">Please enter any additional information.</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex; width: 100%; justify-content: center;">
+            <input type="submit" class="btn btn-primary" style="background-color: #e91e63; width: 40rem; height: 3rem;">
+        </div>
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+   roadmaps
+{% endblock title %}
+
+{% block content %}
+{% load static %}
+  <style>
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+        <div class="card-body">
+
+    <div class="input-box">
+      <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="topic" class="form-control" placeholder="Enter a topic" required>
+        <input type="submit" value="Generate Roadmap" class="btn btn-primary">
+      </form>
+    </div>
+<br>
+<br>
+<br>
+    <div class="image-container">
+      <img src="{% static 'assets/downloads/' %}{{ image_url }}" alt="Roadmap Image" class="roadmap-image">
+    </div>
+<br>
+<br>
+
+    <button class="btn btn-secondary" onclick="downloadImage()">Download Roadmap</button>
+  </div>
+
+  <script>
+    function downloadImage() {
+      const imagePath = document.querySelector('.roadmap-image').src; // URL to the image
+      const link = document.createElement('a');
+      link.href = imagePath;
+      link.download = 'roadmap.png'; // Change the file name and extension as needed
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+{% endblock %}

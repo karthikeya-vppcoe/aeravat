@@ -1,0 +1,15 @@
+{% extends "base3.html" %}
+
+{% block title %}Career Path Suggestions{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="display: flex; width: 100%; padding-right: 5rem; padding-left: 5rem; justify-content: center; flex-direction: column; ">
+    <h1 class="text-center mb-4">Career Path Suggestions</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <p class="text-center mb-4">Based on the information you provided, here are some suitable career paths:</p>
+            <p style="display:flex; padding:2rem; font-size:15px; font-weight:600;">{{response}}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

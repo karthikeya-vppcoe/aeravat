@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../../db.sqlite3"
+}
+
+
+// Only keeping the student profile model
+model studentprofile_studentprofile {
+  id                    Int      @id @default(autoincrement())
+  name                  String?
+  linkedin_profile      String?
+  email                 String?
+  skills                String?
+  projects              String?
+  desired_role          String?
+  preferred_industry    String?
+  technology_interests  String?
+  current_year          Int?
+  placement_year        Int?
+ 
+  // Removing this relation since we're not including the related model
+  // studentprofile_useranswer studentprofile_useranswer[]
+}
+

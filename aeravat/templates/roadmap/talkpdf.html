@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+
+{% load static%}
+
+{% block title %} 
+    Talk with PDF
+{% endblock title %}
+
+{% block content %}
+
+
+<script src="{% static 'assets/js/plugins/chartjs.min.js'%}"></script>
+<style>
+    #container {
+        width: 90%; /* Adjust the width as needed */
+        max-width: 900px; /* Maximum width for responsiveness */
+        background-color: #000; /* White background color */
+        border: 3px solid #6546d2; /* Thicker blue border */
+        border-radius: 15px; /* Rounded corners */
+        padding: 40px; /* Increase padding for a better look */
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        margin: auto; /* Center the container horizontally */
+        margin-top: 50px; /* Add some top margin */
+        position: fixed; /* Fix the container position */
+        top: 50%; /* Center vertically */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, -50%); /* Center the container precisely */
+        overflow-y: auto; /* Enable vertical scrolling */
+        max-height: calc(100vh - 100px); /* Set maximum height for responsiveness */
+    }
+
+    h1 {
+        color: #007bff; /* Blue color for the heading */
+        text-align: center;
+        margin-bottom: 20px; /* Add space below the heading */
+    }
+
+    form {
+        margin-top: 20px; /* Add some space between heading and form */
+    }
+
+    .form-group {
+        margin-bottom: 20px; /* Add space between form groups */
+    }
+
+    /* Style for input fields */
+    input[type="file"],
+    textarea {
+        width: 100%;
+        padding: 15px; /* Increase padding for input fields */
+        margin-top: 10px; /* Adjust margin-top for input fields */
+        margin-bottom: 20px; /* Adjust margin-bottom for input fields */
+        border: 1px solid #007bff; /* Blue border color */
+        border-radius: 8px; /* Adjust border-radius for input fields */
+        transition: border-color 0.3s ease-in-out;
+    }
+
+    input[type="file"]:focus,
+    textarea:focus {
+        border-color: #0056b3; /* Darker blue border color on focus */
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+        
+    }
+    .chart-container {
+        width: 100%;
+        max-width: 200px; /* Adjust as needed */
+        margin: auto; /* Center the chart container */
+        margin-top: 20px; /* Add top margin */
+    }
+    
+    .scrollbar-custom::-webkit-scrollbar {
+        width: 5px; /* Adjust scrollbar width */
+      }
+  
+      .scrollbar-custom::-webkit-scrollbar-track {
+        background-color: #000; /* Track background color */
+      }
+  
+      .scrollbar-custom::-webkit-scrollbar-thumb {
+        background-color: #007bff; /* Thumb background color */
+        border-radius: 5px; /* Optional: Round the corners */
+      }
+  
+      .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+        background-color: #007bff; /* Thumb hover color */
+    }
+</style>
+
+<div class="container scrollbar-custom" id="container">
+    <h1 class="mb-4">Resume Chat</h1>
+    <div class="row">
+        {% if degree_score is not None %}
+    <div class="chart-container">
+        <canvas id="degree-chart" height="50"></canvas>
+    </div>
+    {% endif %}
+
+    {% if skills_score is not None %}
+    <div class="chart-container">
+        <canvas id="skills-chart" height="50"></canvas>
+    </div>
+    {% endif %}
+
+    {% if experience_score is not None %}
+    <div class="chart-container">
+        <canvas id="experience-chart" height="50"></canvas>
+    </div>
+    {% endif %}
+</div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="pdf_files">Upload Your Resume(s):</label>
+            <input type="file" name="pdf_files" id="pdf_files" class="form-control-file" multiple required>
+        </div>
+        <button type="submit" class="btn dark-icon btn-primary mb-3">Submit</button>
+    </form>
+
+    {% if response_text %}
+        <div class="mt-4">
+            <h2>Response:</h2>
+            <p style="color:#fff;" id="response-text" class="lead">{{ response_text|linebreaks }}</p>
+        </div>
+    {% endif %}
+
+    {% if related_content %}
+        <div class="mt-4">
+            <h2>Related Content:</h2>
+            <ul class="list-group">
+                {% for content in related_content %}
+                    <li class="list-group-item">{{ content }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var responseTextElement = document.getElementById('response-text');
+        if (responseTextElement) {
+            // Split the response text by '*' and join with '<br>' to put each part on a new line
+            responseTextElement.innerHTML = responseTextElement.innerHTML.split('*').join('<br>');
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        {% if degree_score is not None %}
+            // Create and configure degree chart
+            const degreeScore = {{ degree_score }};
+            const degreeChart = new Chart(document.getElementById('degree-chart'), {
+                type: 'pie',
+                data: {
+                    labels: ['Degree Score', 'Remaining'],
+                    datasets: [{
+                        data: [degreeScore, 10 - degreeScore],
+                        backgroundColor: ['#007bff', '#dddddd'],
+                    }],
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Degree Score Breakdown',
+                    },
+                },
+            });
+        {% endif %}
+
+        {% if skills_score is not None %}
+            // Create and configure skills chart
+            const skillsScore = {{ skills_score }};
+            const skillsChart = new Chart(document.getElementById('skills-chart'), {
+                type: 'pie',
+                data: {
+                    labels: ['Skills Score', 'Remaining'],
+                    datasets: [{
+                        data: [skillsScore, 10 - skillsScore],
+                        backgroundColor: ['#28a745', '#dddddd'],
+                    }],
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Skills Score Breakdown',
+                    },
+                },
+            });
+        {% endif %}
+
+        {% if experience_score is not None %}
+            // Create and configure experience chart
+            const experienceScore = {{ experience_score }};
+            const experienceChart = new Chart(document.getElementById('experience-chart'), {
+                type: 'pie',
+                data: {
+                    labels: ['Experience Score', 'Remaining'],
+                    datasets: [{
+                        data: [experienceScore, 10 - experienceScore],
+                        backgroundColor: ['#dc3545', '#dddddd'],
+                    }],
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Experience Score Breakdown',
+                    },
+                },
+            });
+        {% endif %}
+    });
+</script>
+{% endblock %}

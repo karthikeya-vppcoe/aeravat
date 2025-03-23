@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}YouTube Video Suggestions{% endblock %}
+
+{% block content %}
+<center>
+    <div class="container mt-5">
+        <h1>YouTube Resources for Your Subjects</h1>
+
+        {% for subject, videos in api_data.items %}
+            <h2>{{ subject }}</h2>
+            <div class="row">
+                {% for video in videos %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ video.title }}</h5>
+                                {% if video.link %}
+                                {% with video_id=video.link|cut:"https://www.youtube.com/watch?v=" %}
+                                <iframe src="https://www.youtube.com/embed/{{ video_id }}?autoplay=0&mute=1" 
+                                        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen height="175" width="250">
+                                </iframe>
+                                {% endwith %}
+                                {% endif %}
+                                <a href="{{ video.link }}" class="btn btn-primary mt-2" target="_blank">Watch on YouTube</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</center>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    Talk with PDF
+{% endblock title %}
+
+{% block content %}
+{% load static %}
+
+<div class = "container" style="display : flex; padding: 2rem;">
+<div class="card-group">
+    <div class="card" data-animation="true">
+      <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+        <a class="d-block blur-shadow-image" onclick="playVideo('video1')">
+          <img src="https://img.youtube.com/vi/1hHMwLxN6EM/0.jpg" alt="YouTube Video Thumbnail" class="img-fluid shadow border-radius-lg">
+          <iframe id="video1" width="100%" height="200" src="https://www.youtube.com/embed/1hHMwLxN6EM?enablejsapi=1" frameborder="0" allowfullscreen style="display:none;"></iframe>
+        </a>
+      </div>
+      <div class="card-body text-center">
+        <div class="d-flex mt-n6 mx-auto">
+          <a class="btn btn-link text-primary ms-auto border-0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Refresh">
+            <i class="material-icons text-lg">watch</i>
+          </a>
+          <button class="btn btn-link text-info me-auto border-0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit">
+            <i class="material-icons text-lg">courses</i>
+          </button>
+        </div>
+        <h5 class="font-weight-normal mt-3">
+          <a href="javascript:;">how to build mvp</a>
+        </h5>
+  
+      </div>
+      <hr class="dark horizontal my-0">
+      <div class="card-footer d-flex">
+      <button class="btn btn-primary"> watch now!</button>
+      </div>
+    </div>
+  
+    <div class="card" data-animation="true">
+      <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+        <a class="d-block blur-shadow-image" onclick="playVideo('video2')">
+          <img src="https://img.youtube.com/vi/Th8JoIan4dg/0.jpg" alt="YouTube Video Thumbnail" class="img-fluid shadow border-radius-lg">
+          <iframe id="video2" width="100%" height="200" src="https://www.youtube.com/embed/Th8JoIan4dg?enablejsapi=1" frameborder="0" allowfullscreen style="display:none;"></iframe>
+        </a>
+      </div>
+      <div class="card-body text-center">
+        <div class="d-flex mt-n6 mx-auto">
+            <a class="btn btn-link text-primary ms-auto border-0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Refresh">
+              <i class="material-icons text-lg">watch</i>
+            </a>
+            <button class="btn btn-link text-info me-auto border-0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit">
+              <i class="material-icons text-lg">courses</i>
+            </button>
+          </div>
+          <h5 class="font-weight-normal mt-3">
+            <a href="javascript:;">how to build mvp</a>
+          </h5>
+    
+        </div>
+        <hr class="dark horizontal my-0">
+        <div class="card-footer d-flex">
+        <button class="btn btn-primary"> watch now!</button>
+        </div>
+      </div>
+  
+    <div class="card" data-animation="true">
+      <div class="card-header p-0  mt-n4 mx-3 z-index-2">
+        <a class="d-block blur-shadow-image" onclick="playVideo('video3')">
+          <img src="https://img.youtube.com/vi/hyYCn_kAngI/0.jpg" alt="YouTube Video Thumbnail" class="img-fluid shadow border-radius-lg">
+          <iframe id="video3" width="100%" height="200" src="https://www.youtube.com/embed/hyYCn_kAngI?enablejsapi=1" frameborder="0" allowfullscreen style="display:none;"></iframe>
+        </a>
+      </div>
+      <div class="card-body text-center">
+        <div class="d-flex mt-n6 mx-auto">
+            <a class="btn btn-link text-primary ms-auto border-0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Refresh">
+              <i class="material-icons text-lg">watch</i>
+            </a>
+            <button class="btn btn-link text-info me-auto border-0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit">
+              <i class="material-icons text-lg">courses</i>
+            </button>
+          </div>
+          <h5 class="font-weight-normal mt-3">
+            <a href="javascript:;">how to build mvp</a>
+          </h5>
+    
+        </div>
+        <hr class="dark horizontal my-0">
+        <div class="card-footer d-flex">
+        <button class="btn btn-primary"> watch now!</button>
+        </div>
+      </div>
+  
+  <script>
+    function playVideo(videoId) {
+      var iframe = document.getElementById(videoId);
+      var img = iframe.previousElementSibling;
+  
+      img.style.display = 'none';
+      iframe.style.display = 'block';
+      iframe.src += "&autoplay=1";
+    }
+  </script>
+  
+{% endblock %}

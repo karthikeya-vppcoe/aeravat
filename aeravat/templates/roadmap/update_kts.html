@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %} Update KT {% endblock title %}
+
+{% block content %}
+    <center>
+        <div class="container mt-5">
+            <h1>Update KT Information</h1>
+
+            <div id="kt-form-container">
+                <form id="kt-form" action="/handle_update_kts" method="post">
+                    {% csrf_token %}
+                    <div id="kt-fields" style="padding: 2rem;">
+                        <div class="form-group mb-3" style="display: flex; width: 100%; justify-content: start; flex-direction: column; align-items: baseline;">
+                            <label for="subject-1">Subject:</label>
+                            <input type="text" class="form-control" id="subject-1" name="subject-1" placeholder="Enter subject name" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <button type="button" class="btn btn-primary" id="add-kt">Add KT</button>
+            </div>
+        </div>
+    </center>
+
+    <script>
+        const ktFieldsContainer = document.getElementById('kt-fields');
+        const addKtButton = document.getElementById('add-kt');
+
+        let ktCount = 1; // Start with 1
+
+        addKtButton.addEventListener('click', () => {
+            ktCount++;
+            const ktField = document.createElement('div');
+            ktField.classList.add('form-group', 'mb-3');
+            ktField.style.display = 'flex';
+            ktField.style.flexDirection = 'column';
+            ktField.style.alignItems = 'baseline';
+            ktField.innerHTML = `
+                <label for="subject-${ktCount}">Subject:</label>
+                <input type="text" class="form-control" id="subject-${ktCount}" name="subject-${ktCount}" placeholder="Enter subject name" required>
+            `;
+            ktFieldsContainer.appendChild(ktField);
+        });
+    </script>
+{% endblock content %}

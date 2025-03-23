@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div class="card">
+    <div class="card-body">
+
+    <h1>{{desired_job}} Quiz</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% for question in questions %}
+            <div class="question">
+                <p><strong>{{ forloop.counter }}. {{ question.question }}</strong></p>
+                <ul>
+                    {% for option in question.options %}
+                        <li>
+                            <label>
+                                <input type="radio" 
+       name="question_{{ forloop.counter }}" 
+       value="{{ option }}" 
+       id="q{{ forloop.counter }}_{{ option }}">
+<label for="q{{ forloop.counter }}_{{ option }}">{{ option }}</label>
+                                {{ option }}
+                            </label>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+<iframe id="compilerFrame"
+    frameBorder="0"
+    height="600px"
+    src="https://onecompiler.com/embed/"
+    width="100%">
+</iframe>
+{% endblock %}

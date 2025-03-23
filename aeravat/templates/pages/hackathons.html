@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathon List</title>
+</head>
+<body>
+    <br><br><br>
+    <h1 class="text-center ">HACKATHONS</h1>
+    <br><br><br>
+    <div class="container">
+        <div class="row">
+            {% for hackathon in hackathons %}
+            <div class="col-md-4 mb-4">
+                <div class="card" data-animation="true">
+                    <div class="card-body text-center">
+                        <h5 class="font-weight-normal mt-3">{{ hackathon.title }}</h5>
+                        <p class="mb-3">Date: {{ hackathon.date }}</p>
+                        <p class="mb-3">Participants: +{{ hackathon.participants_count }}</p>
+                        <a href="{{ hackathon.link }}" class="btn btn-primary" target="_blank">Apply Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}
